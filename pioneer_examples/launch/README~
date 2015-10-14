@@ -1,0 +1,51 @@
+**************************************
+Faire de la téléopération et visualiser le robot dans RVIZ
+**************************************
+
+
+
+***********************
+ssh etudiant@192.168.0.2X:
+
+dans le .bashrc ajouter:
+export ROS_MASTER_URI=http://192.168.0.2X:11311
+export ROS_IP=192.168.0.2X
+
+- roslaunch pioneer.launch qui lance roscore,RosAria,base_to_laser,hokuyo,joint_state_publisher,robot_state_publisher
+- roslaunch gmapping slam_gmapping
+
+
+***********************
+local:
+
+dans le .bashrc ajouter:
+export ROS_MASTER_URI=http://192.168.0.2X:11311
+export ROS_IP=192.168.0.3X
+
+- roslaunch pioneer_examples teleop_rosaria.launch
+- rviz
+configuration rviz: 
+- fixed_frame=map
+- ajouter map, topic=/map
+- ajouterLaserScan topic=/scan
+- ajouter RobotModel 
+
+
+
+pioneer.launch:
+<launch>
+
+<include file="$(find pioneer3dx_description)/launch/pioneer3dx.launch"/>
+
+ <node pkg="tf" type="static_transform_publisher" name="base_to_laser"
+    args="0.15 0 0.2 0 0 0 /base_link /laser 10" >
+</node>
+ <node name="RosAria" pkg="rosaria" type="RosAria">
+    <param name="port" value="/dev/ttyS0" />
+</node>
+ <node name="hokuyo0" pkg="hokuyo_node" type="hokuyo_node">
+        <param name="port" type="string" value="/dev/ttyACM0" />
+</node>
+
+</launch>
+

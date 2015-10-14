@@ -1,0 +1,6 @@
+
+<launch>
+  <param name="~port" value="/dev/ttyS0" />
+  <node name="rosaria_driver" pkg="rosaria" type="RosAria" />
+</launch>
+

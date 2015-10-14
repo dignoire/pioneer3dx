@@ -1,0 +1,6 @@
+<launch>
+	<arg name="joy_num" default="1"/>
+	<param name="joy_node/dev" value="/dev/input/js$(arg joy_num)"/>
+	<node pkg="joy" type="joy_node" name="joy_node" />
+	<node pkg="teleop_joy" type="teleop_joy_node" name="teleop_joy_node" />
+</launch>
